@@ -1,0 +1,36 @@
+server:
+  servlet:
+    context-path: /app
+  #address: ${remote.host}
+  port: 8090
+  tomcat:
+    accesslog:
+      enabled: true
+      pattern: '%t %a %{True-Client-Ip}i \"%r\" %m %s %b \"%{Referer}i\" %q \"%{User-agent}i\"
+        %h %D \"%{Content-Type}i\" %{Host}i %{X-wag_sid}i %{X-relevancyInst}i'
+      prefix: ${spring.application.name}  
+# Mongo Properties
+spring:
+  data.mongodb:
+    host: localhost # hostname
+    port: 27017 # port
+    uri: mongodb://127.0.0.1:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false #uri
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  health:
+    mongo:
+      enabled: true      
+## Logging
+log:
+  history: 10
+  maxLogFileSize: 100MB
+  #pattern: '%cyan(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%gray(${spring.application.name})] %magenta(${PID:-}) [%yellow(%t)] %highlight(%-5level) [%r ms] %cyan(%logger{36}) - %msg%n%throwable'
+  pattern: '%gray(%d{yyyy-MM-dd HH:mm:ss.SSS}) [%magenta(${spring.application.name})] [%yellow(%t)] %highlight(%-5level) %cyan(%logger{200}) - %msg%n%throwable'
+  path: ${user.home}/Logs
+logging:
+  level:
+    root: info
